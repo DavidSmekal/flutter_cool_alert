@@ -167,6 +167,7 @@ class CoolAlertContainer extends StatelessWidget {
       return Text(
         text ?? '',
         textAlign: TextAlign.center,
+        style: options!.dialogTextStyle,
       );
     }
   }
