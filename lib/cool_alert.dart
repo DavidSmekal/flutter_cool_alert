@@ -42,11 +42,17 @@ class CoolAlert {
     /// Barrier Dissmisable
     bool barrierDismissible = true,
 
+    /// Show close button at top right corner
+    bool showBarrierDismissibleBtn = false,
+
     // Triggered when confirm button is tapped
     VoidCallback? onConfirmBtnTap,
 
     /// Triggered when cancel button is tapped
     VoidCallback? onCancelBtnTap,
+
+    /// Triggered when close button is tapped
+    VoidCallback? onBarrierDismissibleBtnTap,
 
     /// Confirmation button text
     String confirmBtnText = 'Ok',
@@ -56,6 +62,9 @@ class CoolAlert {
 
     /// Color for confirm button
     Color confirmBtnColor = const Color(0xFF3085D6),
+
+    /// Color for cancel button
+    Color cancelBtnColor = const Color(0xFF3085D6),
 
     /// TextStyle for confirm button
     TextStyle? confirmBtnTextStyle,
@@ -105,11 +114,14 @@ class CoolAlert {
       type: type,
       animType: animType,
       barrierDismissible: barrierDismissible,
+      showBarrierDismissibleBtn: showBarrierDismissibleBtn,
+      onBarrierDismissibleBtnTap: onBarrierDismissibleBtnTap,
       onConfirmBtnTap: onConfirmBtnTap,
       onCancelBtnTap: onCancelBtnTap,
       confirmBtnText: confirmBtnText,
       cancelBtnText: cancelBtnText,
       confirmBtnColor: confirmBtnColor,
+      cancelBtnColor: cancelBtnColor,
       confirmBtnTextStyle: confirmBtnTextStyle,
       cancelBtnTextStyle: cancelBtnTextStyle,
       showCancelBtn: showCancelBtn,

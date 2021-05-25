@@ -84,8 +84,12 @@ class CoolAlertButtons extends StatelessWidget {
       ),
     );
 
-    final cancelBtn = GestureDetector(
-      onTap: onTap,
+    final cancelBtn = MaterialButton(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30.0),
+      ),
+      onPressed: onTap,
+      color: options!.cancelBtnColor ?? Theme.of(context!).primaryColor,
       child: Container(
         child: Center(
           child: _btnText,

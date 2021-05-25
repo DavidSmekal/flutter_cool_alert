@@ -79,33 +79,50 @@ class CoolAlertContainer extends StatelessWidget {
       if (options!.flareAsset != null) {
         anim = options!.flareAsset;
       }
-      return Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: options!.backgroundColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(options!.borderRadius!),
-            topRight: Radius.circular(options!.borderRadius!),
+      return Stack(
+        children: [
+          Container(
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: options!.backgroundColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(options!.borderRadius!),
+                topRight: Radius.circular(options!.borderRadius!),
+              ),
+            ),
+            child: Container(
+              height: 150,
+              width: 150,
+              child: options!.lottieAsset == null
+                  ? FlareActor(
+                      anim,
+                      animation: options!.loopAnimation
+                          ? options!.flareAnimationName
+                          : null,
+                      controller: options!.loopAnimation
+                          ? null
+                          : SingleLoopController(
+                              options!.flareAnimationName!,
+                              1,
+                            ),
+                    )
+                  : Lottie.asset(options!.lottieAsset!),
+            ),
           ),
-        ),
-        child: Container(
-          height: 150,
-          width: 150,
-          child: options!.lottieAsset == null
-              ? FlareActor(
-                  anim,
-                  animation: options!.loopAnimation
-                      ? options!.flareAnimationName
-                      : null,
-                  controller: options!.loopAnimation
-                      ? null
-                      : SingleLoopController(
-                          options!.flareAnimationName!,
-                          1,
-                        ),
-                )
-              : Lottie.asset(options!.lottieAsset!),
-        ),
+          Visibility(
+            visible: options!.showBarrierDismissibleBtn ?? false,
+            child: Positioned(
+              top: 0,
+              right: 0,
+              child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: CircleBorder(),
+                  ),
+                  onPressed: options?.onBarrierDismissibleBtnTap,
+                  child: Icon(Icons.close)),
+            ),
+          ),
+        ],
       );
     }
   }

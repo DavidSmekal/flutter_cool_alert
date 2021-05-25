@@ -8,11 +8,14 @@ class CoolAlertOptions {
   CoolAlertType type;
   CoolAlertAnimType? animType;
   bool? barrierDismissible = false;
+  bool? showBarrierDismissibleBtn = false;
+  VoidCallback? onBarrierDismissibleBtnTap;
   VoidCallback? onConfirmBtnTap;
   VoidCallback? onCancelBtnTap;
   String? confirmBtnText;
   String? cancelBtnText;
   Color? confirmBtnColor;
+  Color? cancelBtnColor;
   TextStyle? confirmBtnTextStyle;
   TextStyle? cancelBtnTextStyle;
   bool? showCancelBtn;
@@ -35,7 +38,10 @@ class CoolAlertOptions {
     this.onCancelBtnTap,
     this.confirmBtnText,
     this.cancelBtnText,
+    this.showBarrierDismissibleBtn,
+    this.onBarrierDismissibleBtnTap,
     this.confirmBtnColor,
+    this.cancelBtnColor,
     this.confirmBtnTextStyle,
     this.cancelBtnTextStyle,
     this.showCancelBtn,
