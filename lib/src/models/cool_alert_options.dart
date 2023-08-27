@@ -18,7 +18,8 @@ class CoolAlertOptions {
   Color? cancelBtnColor;
   TextStyle? confirmBtnTextStyle;
   TextStyle? cancelBtnTextStyle;
-  TextStyle? dialogTextStyle;
+  TextStyle? titleTextStyle;
+  TextStyle? textTextStyle;
   bool? showCancelBtn;
   double? borderRadius;
   Color? backgroundColor;
@@ -27,6 +28,9 @@ class CoolAlertOptions {
   String? lottieAsset;
   double? width;
   bool loopAnimation;
+  bool closeOnConfirmBtnTap;
+  Duration? autoCloseDuration;
+  bool reverseBtnOrder = false;
 
   CoolAlertOptions({
     this.title,
@@ -45,7 +49,8 @@ class CoolAlertOptions {
     this.cancelBtnColor,
     this.confirmBtnTextStyle,
     this.cancelBtnTextStyle,
-    this.dialogTextStyle,
+    this.titleTextStyle,
+    this.textTextStyle,
     this.showCancelBtn,
     this.borderRadius,
     this.backgroundColor,
@@ -54,5 +59,8 @@ class CoolAlertOptions {
     this.lottieAsset,
     this.width,
     this.loopAnimation = false,
+    this.closeOnConfirmBtnTap = true,
+    this.autoCloseDuration,
+    this.reverseBtnOrder = false,
   });
 }

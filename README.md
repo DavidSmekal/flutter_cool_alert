@@ -25,6 +25,7 @@ CoolAlert.show(
 
 ### CoolAlert Class
 
+
 | Attribute        | Data type           | Description                                                                                                                                                   |            Default Value            |
 |:----------------------|:-------------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------:|
 | context| BuildContext | @required                                                                                      |                Null                 |
@@ -48,6 +49,8 @@ title| String | Set a custom title for dialog                                   
 |autoCloseDuration|Duration|Determines how long the dialog stays open for before closing|Null|
 |width|double|Dialog width|MediaQuery.of(context).size.width|
 |loopAnimation|boolean|Determines if the animation should loop or not|false|
+|closeOnConfirmBtnTap|boolean|Detemines if dialog closes when the confirm button is tapped|true|
+|reverseBtnOrder|boolean|Reverse the order of the buttons|false|
 
 
 

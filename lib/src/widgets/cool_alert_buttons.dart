@@ -3,58 +3,76 @@ import 'package:cool_alert/src/models/cool_alert_options.dart';
 import 'package:flutter/material.dart';
 
 class CoolAlertButtons extends StatelessWidget {
-  final CoolAlertOptions? options;
+  final CoolAlertOptions options;
 
-  CoolAlertButtons({
+  const CoolAlertButtons({
     Key? key,
-    this.options,
+    required this.options,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> buttons = [
+      _cancelBtn(context),
+      _okayBtn(context),
+    ];
+    if (options.reverseBtnOrder) {
+      buttons = buttons.reversed.toList();
+    }
+
     return Container(
-      margin: EdgeInsets.only(top: 10.0),
+      margin: const EdgeInsets.only(top: 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          _cancelBtn(context),
-          _okayBtn(context),
-        ],
+        children: buttons,
       ),
     );
   }
 
   Widget _okayBtn(context) {
     final showCancelBtn =
-        options!.type == CoolAlertType.confirm ? true : options!.showCancelBtn!;
+        options.type == CoolAlertType.confirm ? true : options.showCancelBtn!;
 
-    final _okayBtn = _buildButton(
+    final okayBtn = _buildButton(
       context: context,
       isOkayBtn: true,
-      text: options!.confirmBtnText!,
-      onTap: options!.onConfirmBtnTap ?? () => Navigator.pop(context),
+      text: options.confirmBtnText!,
+      onTap: () {
+        options.onConfirmBtnTap?.call();
+
+        // If autoCloseDuration is NOT null, it means the dialg will be auto closed, so disable confirm button tap
+        if (options.autoCloseDuration != null) {
+          return;
+        }
+        if (options.closeOnConfirmBtnTap) {
+          Navigator.of(context, rootNavigator: true).pop();
+        }
+      },
     );
 
     if (showCancelBtn) {
-      return Expanded(child: _okayBtn);
+      return Expanded(child: okayBtn);
     } else {
-      return _okayBtn;
+      return okayBtn;
     }
   }
 
   Widget _cancelBtn(context) {
     final showCancelBtn =
-        options!.type == CoolAlertType.confirm ? true : options!.showCancelBtn!;
+        options.type == CoolAlertType.confirm ? true : options.showCancelBtn!;
 
-    final _cancelBtn = _buildButton(
+    final cancelBtn = _buildButton(
       context: context,
       isOkayBtn: false,
-      text: options!.cancelBtnText!,
-      onTap: options!.onCancelBtnTap ?? () => Navigator.pop(context),
+      text: options.cancelBtnText!,
+      onTap: () {
+        options.onCancelBtnTap?.call();
+        Navigator.pop(context);
+      },
     );
 
     if (showCancelBtn) {
-      return Expanded(child: _cancelBtn);
+      return Expanded(child: cancelBtn);
     } else {
       return Container();
     }
@@ -66,7 +84,7 @@ class CoolAlertButtons extends StatelessWidget {
     required String text,
     VoidCallback? onTap,
   }) {
-    final _btnText = Text(
+    final btnText = Text(
       text,
       style: _defaultTextStyle(isOkayBtn),
     );
@@ -75,12 +93,11 @@ class CoolAlertButtons extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30.0),
       ),
-      color: options!.confirmBtnColor ?? Theme.of(context!).primaryColor,
+      elevation: 0,
+      color: options.confirmBtnColor ?? Theme.of(context!).primaryColor,
       onPressed: onTap,
-      child: Container(
-        child: Center(
-          child: _btnText,
-        ),
+      child: Center(
+        child: btnText,
       ),
     );
 
@@ -89,10 +106,10 @@ class CoolAlertButtons extends StatelessWidget {
         borderRadius: BorderRadius.circular(30.0),
       ),
       onPressed: onTap,
-      color: options!.cancelBtnColor ?? Theme.of(context!).primaryColor,
+      color: options.cancelBtnColor ?? Theme.of(context!).primaryColor,
       child: Container(
         child: Center(
-          child: _btnText,
+          child: btnText,
         ),
       ),
     );
@@ -104,13 +121,13 @@ class CoolAlertButtons extends StatelessWidget {
     final textStyle = TextStyle(
       color: isOkayBtn ? Colors.white : Colors.grey,
       fontWeight: FontWeight.w600,
-      fontSize: 18.0,
+      fontSize: 14.0,
     );
 
     if (isOkayBtn) {
-      return options!.confirmBtnTextStyle ?? textStyle;
+      return options.confirmBtnTextStyle ?? textStyle;
     } else {
-      return options!.cancelBtnTextStyle ?? textStyle;
+      return options.cancelBtnTextStyle ?? textStyle;
     }
   }
 }

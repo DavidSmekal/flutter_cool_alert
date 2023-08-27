@@ -9,6 +9,7 @@ import 'src/utils/animate.dart';
 import 'src/widgets/cool_alert_container.dart';
 
 enum CoolAlertType { success, error, warning, confirm, info, loading, custom }
+
 enum CoolAlertAnimType {
   scale,
   rotate,
@@ -72,8 +73,12 @@ class CoolAlert {
     /// TextStyle for cancel button
     TextStyle? cancelBtnTextStyle,
 
-    /// TextStyle for dialog
-    TextStyle? dialogTextStyle,
+
+    /// TextStyle for title
+    TextStyle? titleTextStyle,
+
+    /// TextStyle for text
+    TextStyle? textTextStyle,
 
     /// Determines if cancel button is shown or not
     bool showCancelBtn = false,
@@ -103,6 +108,15 @@ class CoolAlert {
 
     /// Detemines if the animation loops or not
     bool loopAnimation = false,
+
+    /// Detemines if dialog closes when the confirm button is tapped
+    /// [default] is true
+    /// When it is true, it will close
+    /// When it is false, you will have to close it manually by using Navigator.of(context).pop();
+    bool closeOnConfirmBtnTap = true,
+
+    /// Reverse the order of the buttons
+    bool reverseBtnOrder = false,
   }) {
     if (autoCloseDuration != null) {
       Future.delayed(autoCloseDuration, () {
@@ -127,7 +141,8 @@ class CoolAlert {
       cancelBtnColor: cancelBtnColor,
       confirmBtnTextStyle: confirmBtnTextStyle,
       cancelBtnTextStyle: cancelBtnTextStyle,
-      dialogTextStyle: dialogTextStyle,
+      titleTextStyle: titleTextStyle,
+      textTextStyle: textTextStyle,
       showCancelBtn: showCancelBtn,
       borderRadius: borderRadius,
       backgroundColor: backgroundColor,
@@ -136,6 +151,9 @@ class CoolAlert {
       lottieAsset: lottieAsset,
       width: width,
       loopAnimation: loopAnimation,
+      closeOnConfirmBtnTap: closeOnConfirmBtnTap,
+      autoCloseDuration: autoCloseDuration,
+      reverseBtnOrder: reverseBtnOrder,
     );
 
     final child = AlertDialog(
@@ -174,7 +192,7 @@ class CoolAlert {
             return child;
         }
       },
-      transitionDuration: Duration(milliseconds: 200),
+      transitionDuration: const Duration(milliseconds: 200),
       barrierDismissible:
           autoCloseDuration != null ? false : barrierDismissible,
       barrierLabel: '',
